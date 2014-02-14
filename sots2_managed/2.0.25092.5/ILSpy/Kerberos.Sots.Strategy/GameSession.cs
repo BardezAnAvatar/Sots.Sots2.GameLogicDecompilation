@@ -118,7 +118,10 @@ namespace Kerberos.Sots.Strategy
                 this.TaxRevenue *= num;
                 this.SavingsInterest = GameSession.CalculateSavingsInterest(game.Game, playerInfo);
                 this.DebtInterest = GameSession.CalculateDebtInterest(game.Game, playerInfo);
-                this.ColonySupportCost = source.Sum<ColonyInfo>((Func<ColonyInfo, double>) (x => Kerberos.Sots.Strategy.InhabitedPlanet.Colony.GetColonySupportCost(assetdb, db, x)));
+                
+                //Fix by Bardez to speed up this calculation
+                this.ColonySupportCost = Bardez.Projects.SwordOfTheStars.SotS2.Fixes.Sots.Strategy.InhabitedPanet.Colony.GetEmpireColonySupportCost(db, playerId, source);
+                //this.ColonySupportCost = source.Sum<ColonyInfo>((Func<ColonyInfo, double>) (x => Kerberos.Sots.Strategy.InhabitedPlanet.Colony.GetColonySupportCost(assetdb, db, x)));
                 Kerberos.Sots.PlayerFramework.Player player = game.GetPlayer(playerId);
                 this.UpkeepCost = ((player != null) && !player.IsAI()) ? GameSession.CalculateUpkeepCosts(assetdb, db, playerId) : 0.0;
                 if (game.AssetDatabase.GetFaction(playerInfo.FactionID).Name == "loa")

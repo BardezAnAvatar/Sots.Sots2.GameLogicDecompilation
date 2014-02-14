@@ -38,6 +38,9 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bardez\Projects\SwordOfTheStars\SotS2\Fixes\Sots\Strategy\InhabitedPanet\Colony.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
