@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<VSPerformanceSession Version="1.00">
+  <Options>
+    <Solution>N:\Code\SotS\SotS II\SotS2 Decompilation\SotS2 Decompilation.sln</Solution>
+    <CollectionMethod>Sampling</CollectionMethod>
+    <AllocationMethod>None</AllocationMethod>
+    <LaunchRuntimeControl>true</LaunchRuntimeControl>
+    <AddReport>true</AddReport>
+    <ResourceBasedAnalysisSelected>false</ResourceBasedAnalysisSelected>
+    <ThreadBasedAnalysisSelected>false</ThreadBasedAnalysisSelected>
+    <UniqueReport>Timestamp</UniqueReport>
+    <SamplingMethod>Cycles</SamplingMethod>
+    <CycleCount>10000000</CycleCount>
+    <PageFaultCount>10</PageFaultCount>
+    <SysCallCount>10</SysCallCount>
+    <SamplingCounter Name="" ReloadValue="00000000000f4240" DisplayName="" />
+    <RelocateBinaries>false</RelocateBinaries>
+    <CollectOnHpcCluster>false</CollectOnHpcCluster>
+    <HPCSettings>
+      <NumberOfProcesses>0</NumberOfProcesses>
+      <TargetSelection>UnknownDisabled</TargetSelection>
+      <ProfileOnRank>0</ProfileOnRank>
+      <AdvancedProperties>
+        <Project>Profiler Project</Project>
+        <CleanUp>true</CleanUp>
+        <MpiexecCommand>mpiexec.exe</MpiexecCommand>
+        <DeployCRT>true</DeployCRT>
+      </AdvancedProperties>
+    </HPCSettings>
+    <HardwareCounters EnableHWCounters="false" />
+    <EtwSettings />
+    <PdhSettings>
+      <PdhCountersEnabled>false</PdhCountersEnabled>
+      <PdhCountersRate>500</PdhCountersRate>
+      <PdhCounters>
+        <PdhCounter>\Memory\Pages/sec</PdhCounter>
+        <PdhCounter>\PhysicalDisk(_Total)\Avg. Disk Queue Length</PdhCounter>
+        <PdhCounter>\Processor(_Total)\% Processor Time</PdhCounter>
+      </PdhCounters>
+    </PdhSettings>
+  </Options>
+  <ExcludeSmallFuncs>true</ExcludeSmallFuncs>
+  <JScriptProfilingEnabled>false</JScriptProfilingEnabled>
+  <PreinstrumentEvent>
+    <InstrEventExclude>false</InstrEventExclude>
+  </PreinstrumentEvent>
+  <PostinstrumentEvent>
+    <InstrEventExclude>false</InstrEventExclude>
+  </PostinstrumentEvent>
+  <Binaries>
+    <Binary>
+      <Path>C:\Program Files (x86)\Steam\SteamApps\common\sword of the stars ii\bin\x86\mars.exe</Path>
+      <ArgumentTimestamp>01/01/0001 00:00:00</ArgumentTimestamp>
+      <Instrument>true</Instrument>
+      <Sample>true</Sample>
+      <ExternalWebsite>false</ExternalWebsite>
+      <InteractionProfilingEnabled>false</InteractionProfilingEnabled>
+      <IsLocalJavascript>false</IsLocalJavascript>
+      <LaunchProject>true</LaunchProject>
+      <OverrideProjectSettings>false</OverrideProjectSettings>
+      <LaunchMethod>Executable</LaunchMethod>
+      <ExecutablePath>C:\Program Files (x86)\Steam\SteamApps\common\sword of the stars ii\bin\x86\mars.exe</ExecutablePath>
+      <StartupDirectory />
+      <Arguments />
+      <NetAppHost>IIS</NetAppHost>
+      <NetBrowser>InternetExplorer</NetBrowser>
+      <ExcludeSmallFuncs>true</ExcludeSmallFuncs>
+      <JScriptProfilingEnabled>false</JScriptProfilingEnabled>
+      <PreinstrumentEvent>
+        <InstrEventExclude>false</InstrEventExclude>
+      </PreinstrumentEvent>
+      <PostinstrumentEvent>
+        <InstrEventExclude>false</InstrEventExclude>
+      </PostinstrumentEvent>
+    </Binary>
+    <Binary>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\sots2_managed\bin\Debug\sots2_managed.dll</Path>
+      <ArgumentTimestamp>01/01/0001 00:00:00</ArgumentTimestamp>
+      <Instrument>true</Instrument>
+      <Sample>true</Sample>
+      <ExternalWebsite>false</ExternalWebsite>
+      <InteractionProfilingEnabled>false</InteractionProfilingEnabled>
+      <IsLocalJavascript>false</IsLocalJavascript>
+      <LaunchProject>true</LaunchProject>
+      <OverrideProjectSettings>false</OverrideProjectSettings>
+      <LaunchMethod>Executable</LaunchMethod>
+      <NetAppHost>IIS</NetAppHost>
+      <NetBrowser>InternetExplorer</NetBrowser>
+      <ExcludeSmallFuncs>true</ExcludeSmallFuncs>
+      <JScriptProfilingEnabled>false</JScriptProfilingEnabled>
+      <PreinstrumentEvent>
+        <InstrEventExclude>false</InstrEventExclude>
+      </PreinstrumentEvent>
+      <PostinstrumentEvent>
+        <InstrEventExclude>false</InstrEventExclude>
+      </PostinstrumentEvent>
+    </Binary>
+    <ProjBinary>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\sots2_managed\2.0.25092.5\ILSpy\obj\x86\Debug\sots2_managed.dll</Path>
+      <ArgumentTimestamp>01/01/0001 00:00:00</ArgumentTimestamp>
+      <Instrument>true</Instrument>
+      <Sample>true</Sample>
+      <ExternalWebsite>false</ExternalWebsite>
+      <InteractionProfilingEnabled>false</InteractionProfilingEnabled>
+      <IsLocalJavascript>false</IsLocalJavascript>
+      <LaunchProject>true</LaunchProject>
+      <OverrideProjectSettings>false</OverrideProjectSettings>
+      <LaunchMethod>Executable</LaunchMethod>
+      <ExecutablePath>C:\Program Files (x86)\Steam\SteamApps\common\sword of the stars ii\bin\x86\mars.exe</ExecutablePath>
+      <StartupDirectory>C:\Program Files (x86)\Steam\SteamApps\common\sword of the stars ii\bin\x86</StartupDirectory>
+      <Arguments>-n"Sword of the Stars II" -g"..\..\assets" +deployed -w1024 -h720 -locale:en +window +rfxaa +rbloom +rfblur +rrefract +rocclude +planetgen +rdecal -console -rmipbias0</Arguments>
+      <NetAppHost>IIS</NetAppHost>
+      <NetBrowser>InternetExplorer</NetBrowser>
+      <ExcludeSmallFuncs>true</ExcludeSmallFuncs>
+      <JScriptProfilingEnabled>false</JScriptProfilingEnabled>
+      <PreinstrumentEvent>
+        <InstrEventExclude>false</InstrEventExclude>
+      </PreinstrumentEvent>
+      <PostinstrumentEvent>
+        <InstrEventExclude>false</InstrEventExclude>
+      </PostinstrumentEvent>
+      <ProjRef>{DB84C757-F6F3-47AD-9DF5-CF546ECFE79E}|sots2_managed\2.0.25092.5\ILSpy\sots2_managed.csproj</ProjRef>
+      <ProjPath>N:\Code\SotS\SotS II\SotS2 Decompilation\sots2_managed\2.0.25092.5\ILSpy\sots2_managed.csproj</ProjPath>
+      <ProjName>sots2_managed</ProjName>
+    </ProjBinary>
+    <ProjBinary>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\sots2.exe\obj\x86\Debug\sots2.exe</Path>
+      <ArgumentTimestamp>01/01/0001 00:00:00</ArgumentTimestamp>
+      <Instrument>true</Instrument>
+      <Sample>true</Sample>
+      <ExternalWebsite>false</ExternalWebsite>
+      <InteractionProfilingEnabled>false</InteractionProfilingEnabled>
+      <IsLocalJavascript>false</IsLocalJavascript>
+      <LaunchProject>true</LaunchProject>
+      <OverrideProjectSettings>false</OverrideProjectSettings>
+      <LaunchMethod>Executable</LaunchMethod>
+      <ExecutablePath>N:\Code\SotS\SotS II\SotS2 Decompilation\sots2.exe\bin\Debug\sots2.exe</ExecutablePath>
+      <StartupDirectory>N:\Code\SotS\SotS II\SotS2 Decompilation\sots2.exe\bin\Debug\</StartupDirectory>
+      <Arguments />
+      <NetAppHost>IIS</NetAppHost>
+      <NetBrowser>InternetExplorer</NetBrowser>
+      <ExcludeSmallFuncs>true</ExcludeSmallFuncs>
+      <JScriptProfilingEnabled>false</JScriptProfilingEnabled>
+      <PreinstrumentEvent>
+        <InstrEventExclude>false</InstrEventExclude>
+      </PreinstrumentEvent>
+      <PostinstrumentEvent>
+        <InstrEventExclude>false</InstrEventExclude>
+      </PostinstrumentEvent>
+      <ProjRef>{7CF99204-E9E6-401A-A98B-0717D7E2D445}|sots2.exe\sots2.exe.csproj</ProjRef>
+      <ProjPath>N:\Code\SotS\SotS II\SotS2 Decompilation\sots2.exe\sots2.exe.csproj</ProjPath>
+      <ProjName>sots2.exe</ProjName>
+    </ProjBinary>
+  </Binaries>
+  <Reports>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\mars140211.vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\mars140211(1).vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\mars140211(2).vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\mars140213.vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\mars140213(1).vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\mars140210(1).vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\mars140210.vsp</Path>
+    </Report>
+  </Reports>
+  <Launches>
+    <Binary>
+      <Path>C:\Program Files (x86)\Steam\SteamApps\common\sword of the stars ii\bin\x86\mars.exe</Path>
+    </Binary>
+    <ProjBinary>
+      <Path>:PB:{7CF99204-E9E6-401A-A98B-0717D7E2D445}|sots2.exe\sots2.exe.csproj</Path>
+    </ProjBinary>
+  </Launches>
+  <RuntimeMarks>
+    <MarkName>Mark One</MarkName>
+    <MarkName>Mark Two</MarkName>
+    <MarkName>Mark Three</MarkName>
+    <MarkName>Mark Four</MarkName>
+    <MarkName>Mark Five</MarkName>
+    <MarkName>Mark Six</MarkName>
+    <MarkName>Mark Seven</MarkName>
+    <MarkName>Mark Eight</MarkName>
+    <MarkName>Mark Nine</MarkName>
+    <MarkName>Mark Ten</MarkName>
+  </RuntimeMarks>
+</VSPerformanceSession>

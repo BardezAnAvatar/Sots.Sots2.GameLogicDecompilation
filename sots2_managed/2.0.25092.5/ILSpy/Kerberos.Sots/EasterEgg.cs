@@ -1,0 +1,21 @@
+using System;
+namespace Kerberos.Sots
+{
+	public enum EasterEgg
+	{
+		EE_SWARM,
+		EE_ASTEROID_MONITOR,
+		EE_PIRATE_BASE,
+		EE_VON_NEUMANN,
+		EE_GARDENERS,
+		EE_INDEPENDENT,
+		EE_MORRIGI_RELIC,
+		GM_SYSTEM_KILLER,
+		GM_LOCUST_SWARM,
+		GM_COMET,
+		GM_NEUTRON_STAR,
+		GM_SUPER_NOVA,
+		GM_GARDENER,
+		UNKNOWN
+	}
+}

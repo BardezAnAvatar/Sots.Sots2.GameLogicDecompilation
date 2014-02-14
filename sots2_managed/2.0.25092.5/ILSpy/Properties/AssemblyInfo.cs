@@ -1,0 +1,22 @@
+﻿// Assembly sots2_managed, Version 2.0.25092.5
+
+[assembly: System.Reflection.AssemblyCompany("Kerberos Productions")]
+[assembly: System.Reflection.AssemblyProduct("Kerberos.Sots")]
+[assembly: System.Reflection.AssemblyCopyright("Copyright \x00a9 Kerberos Productions 2011")]
+[assembly: System.Reflection.AssemblyConfiguration("")]
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("sots2_managed.Explorables")]
+[assembly: System.Reflection.AssemblyDescription("")]
+[assembly: System.Runtime.InteropServices.ComVisible(false)]
+[assembly: System.Runtime.InteropServices.Guid("26f941fc-8138-47eb-b29b-0b4e8cf1e0f3")]
+//[assembly: System.Reflection.AssemblyFileVersion("2.0.25092.5")]
+//[assembly: System.Reflection.AssemblyVersion("2.0.25092.5")]
+[assembly: System.Reflection.AssemblyFileVersion("2.0.25092.6")]
+[assembly: System.Reflection.AssemblyVersion("2.0.25092.6")]
+[assembly: System.Reflection.ObfuscateAssembly(true)]
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("sots2_managed.Tests")]
+[assembly: System.Reflection.AssemblyTrademark("")]
+[assembly: System.Diagnostics.Debuggable(System.Diagnostics.DebuggableAttribute.DebuggingModes.IgnoreSymbolStoreSequencePoints)]
+[assembly: System.Runtime.CompilerServices.CompilationRelaxations(8)]
+[assembly: System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)]
+[assembly: System.Reflection.AssemblyTitle("Kerberos.Sots")]
+
