@@ -1027,10 +1027,11 @@ namespace Kerberos.Sots.UI
         private void SyncSuulkas(FleetInfo fleet)
         {
             IEnumerable<ShipInfo> shipInfoByFleetID = this._game.GameDatabase.GetShipInfoByFleetID(fleet.ID, false);
-            List<object> list = new List<object> {
-        fleet.Type,
-        fleet.ID
-    };
+            List<object> list = new List<object>
+            {
+                fleet.Type,
+                fleet.ID
+            };
             int count = list.Count;
             int item = 0;
             foreach (ShipInfo info in shipInfoByFleetID)
@@ -1282,10 +1283,11 @@ namespace Kerberos.Sots.UI
                 else
                 {
                     List<ShipInfo> list = this._game.GameDatabase.GetShipInfoByFleetID(fleet.ID, false).ToList<ShipInfo>();
-                    List<object> list2 = new List<object> {
-                fleet.Type,
-                fleet.ID
-            };
+                    List<object> list2 = new List<object>
+                    {
+                        fleet.Type,
+                        fleet.ID
+                    };
                     int count = list2.Count;
                     int item = 0;
                     List<int> list3 = null;
