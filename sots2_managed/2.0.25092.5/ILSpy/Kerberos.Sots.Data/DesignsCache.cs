@@ -169,26 +169,35 @@ namespace Kerberos.Sots.Data
 		}
 		protected override IEnumerable<KeyValuePair<int, DesignInfo>> OnSynchronizeWithDatabase(SQLiteConnection db, IEnumerable<int> range)
 		{
+            IEnumerable<KeyValuePair<int, DesignInfo>> values = null;
+
 			if (range == null)
 			{
-				foreach (Row current in db.ExecuteTableQuery(Queries.GetDesignInfos, true))
-				{
-					DesignInfo designInfoFromRow = DesignsCache.GetDesignInfoFromRow(db, base.Assets, current);
-					yield return new KeyValuePair<int, DesignInfo>(designInfoFromRow.ID, designInfoFromRow);
-				}
+                //foreach (Row current in db.ExecuteTableQuery(Queries.GetDesignInfos, true))
+                //{
+                //    DesignInfo designInfoFromRow = DesignsCache.GetDesignInfoFromRow(db, base.Assets, current);
+                //    yield return new KeyValuePair<int, DesignInfo>(designInfoFromRow.ID, designInfoFromRow);
+                //}
+
+                values = Bardez.Projects.SwordOfTheStars.SotS2.Fixes.Sots.Data.GameDatabase.RetrieveSavedShipDesigns(db, base.Assets);
 			}
 			else
 			{
+                List<KeyValuePair<Int32, DesignInfo>> rangedOutput = new List<KeyValuePair<Int32, DesignInfo>>();
+
 				foreach (int current2 in range)
 				{
 					foreach (Row current3 in db.ExecuteTableQuery(string.Format(Queries.GetDesignInfo, current2.ToSQLiteValue()), true))
 					{
 						DesignInfo designInfoFromRow2 = DesignsCache.GetDesignInfoFromRow(db, base.Assets, current3);
-						yield return new KeyValuePair<int, DesignInfo>(designInfoFromRow2.ID, designInfoFromRow2);
+                        rangedOutput.Add(new KeyValuePair<int, DesignInfo>(designInfoFromRow2.ID, designInfoFromRow2));
 					}
 				}
+
+                values = rangedOutput;
 			}
-			yield break;
+
+            return values;
 		}
 		private static int InsertWeaponBank(SQLiteConnection db, int designSectionId, WeaponBankInfo value)
 		{
