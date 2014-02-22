@@ -23,6 +23,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+
+using PerformanceInhabitedPlanet = Bardez.Projects.SwordOfTheStars.SotS2.Fixes.Sots.Strategy.InhabitedPanet;
+
 namespace Kerberos.Sots.Strategy
 {
 	internal class GameSession : IDisposable
@@ -80,7 +83,8 @@ namespace Kerberos.Sots.Strategy
 			{
 				return this.TradeRevenue + this.TaxRevenue + this.IORevenue + this.SavingsInterest - this.ColonySupportCost - this.UpkeepCost - this.CorruptionExpenses - this.DebtInterest;
 			}
-			public NetRevenueSummary(App game, int playerId, double tradeRevenue)
+            
+            public NetRevenueSummary(App game, int playerId, double tradeRevenue)
             {
                 Func<TreatyInfo, bool> predicate = null;
                 Func<ColonyInfo, double> selector = null;
@@ -118,10 +122,11 @@ namespace Kerberos.Sots.Strategy
                 this.TaxRevenue *= num;
                 this.SavingsInterest = GameSession.CalculateSavingsInterest(game.Game, playerInfo);
                 this.DebtInterest = GameSession.CalculateDebtInterest(game.Game, playerInfo);
-                
+
                 //Fix by Bardez to speed up this calculation
-                this.ColonySupportCost = Bardez.Projects.SwordOfTheStars.SotS2.Fixes.Sots.Strategy.InhabitedPanet.Colony.GetEmpireColonySupportCost(db, playerId, source);
+                this.ColonySupportCost = Bardez.Projects.SwordOfTheStars.SotS2.Fixes.Sots.Strategy.InhabitedPanet.Colony.GetEmpireColonySupportCost(db, playerId, playerColonies);
                 //this.ColonySupportCost = source.Sum<ColonyInfo>((Func<ColonyInfo, double>) (x => Kerberos.Sots.Strategy.InhabitedPlanet.Colony.GetColonySupportCost(assetdb, db, x)));
+                
                 Kerberos.Sots.PlayerFramework.Player player = game.GetPlayer(playerId);
                 this.UpkeepCost = ((player != null) && !player.IsAI()) ? GameSession.CalculateUpkeepCosts(assetdb, db, playerId) : 0.0;
                 if (game.AssetDatabase.GetFaction(playerInfo.FactionID).Name == "loa")
@@ -1954,7 +1959,7 @@ namespace Kerberos.Sots.Strategy
 				this._db.PurgeOwnedColonyIntel(player.ID);
 				foreach (StarSystemInfo current2 in list)
 				{
-					if (StarMap.IsInRange(this.GameDatabase, player.ID, current2, dictionary))
+                    if (StarMap.IsInRange(this.GameDatabase, player.ID, current2, dictionary))
 					{
 						this._db.UpdatePlayerViewWithStarSystem(player.ID, current2.ID);
 					}
