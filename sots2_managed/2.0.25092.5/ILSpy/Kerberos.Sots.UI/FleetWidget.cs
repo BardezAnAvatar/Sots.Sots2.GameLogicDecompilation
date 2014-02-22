@@ -12,6 +12,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+
+using Performance = Bardez.Projects.SwordOfTheStars.SotS2.Fixes.Sots.UI;
+
 namespace Kerberos.Sots.UI
 {
 	[GameObjectType(InteropGameObjectType.IGOT_FLEETWIDGET)]
@@ -511,130 +514,133 @@ namespace Kerberos.Sots.UI
 		}
 		public void Refresh()
 		{
-			if (this._contentChanged && this._ready)
-			{
-				this.PostSetProp("RefreshEnabled", false);
-				this.PostSetProp("SetJumboMode", this._jumboMode);
-				this.PostSetProp("EnemySelectionEnabled", this._enemySelectionEnabled);
-				this.PostSetProp("SetScrapEnabled", this._scrapEnabled);
-				if (this._missionMode != MissionType.NO_MISSION)
-				{
-					this.SetMissionMode(true);
-				}
-				else
-				{
-					this.SetMissionMode(false);
-				}
-				if (this._fleetsChanged)
-				{
-					this.ClearFleets();
-					this.AccountedSystems.Clear();
-					List<FleetInfo> list = new List<FleetInfo>();
-					foreach (int current in this._syncedFleets)
-					{
-						FleetInfo fleetInfo = base.App.GameDatabase.GetFleetInfo(current);
-						if (fleetInfo != null)
-						{
-							list.Add(fleetInfo);
-						}
-					}
-					list = (
-						from x in list
-						orderby x.SystemID
-						select x).ToList<FleetInfo>();
-					FleetInfo fleetInfo2 = list.FirstOrDefault((FleetInfo x) => x.IsReserveFleet && x.PlayerID == base.App.LocalPlayer.ID);
-					if (fleetInfo2 != null)
-					{
-						if (!this.AccountedSystems.Contains(fleetInfo2.SystemID))
-						{
-							this.AccountedSystems.Add(fleetInfo2.SystemID);
-							this.SyncSystem(base.App.GameDatabase.GetStarSystemInfo(fleetInfo2.SystemID));
-						}
-						this.SyncFleet(fleetInfo2);
-					}
-					FleetInfo fleetInfo3 = list.FirstOrDefault((FleetInfo x) => x.IsDefenseFleet && x.PlayerID == base.App.LocalPlayer.ID);
-					if (fleetInfo3 != null)
-					{
-						if (!this.AccountedSystems.Contains(fleetInfo3.SystemID))
-						{
-							this.AccountedSystems.Add(fleetInfo3.SystemID);
-							this.SyncSystem(base.App.GameDatabase.GetStarSystemInfo(fleetInfo3.SystemID));
-						}
-						this.SyncFleet(fleetInfo3);
-					}
-					if (this._listStations)
-					{
-						List<StationInfo> list2 = new List<StationInfo>();
-						foreach (int current2 in this._syncedStations)
-						{
-							StationInfo stationInfo = base.App.GameDatabase.GetStationInfo(current2);
-							if (stationInfo != null)
-							{
-								list2.Add(stationInfo);
-							}
-						}
-						this.SyncStations(list2);
-					}
-					foreach (FleetInfo current3 in list)
-					{
-						if (current3 != fleetInfo2 && (current3.Type != FleetType.FL_RESERVE || current3.PlayerID == base.App.LocalPlayer.ID) && current3 != fleetInfo3 && (current3.Type != FleetType.FL_DEFENSE || current3.PlayerID == base.App.LocalPlayer.ID))
-						{
-							if (!this.AccountedSystems.Contains(current3.SystemID))
-							{
-								this.AccountedSystems.Add(current3.SystemID);
-								this.SyncSystem(base.App.GameDatabase.GetStarSystemInfo(current3.SystemID));
-							}
-							this.SyncFleet(current3);
-						}
-					}
-					this._fleetsChanged = false;
-				}
-				if (this._planetsChanged)
-				{
-					this.ClearPlanets();
-					this.SyncPlanets();
-					this._planetsChanged = false;
-				}
-				this.PostSetProp("SetSelected", this._selected);
-				this.PostSetProp("ShowFleetInfo", this._showFleetInfo);
-				this.PostSetProp("ShipSelectionEnabled", this._shipSelectionEnabled);
-				this.PostSetProp("SetPreferredSelectMode", this._preferredSelectMode);
-				if (this._hasSuulka)
-				{
-					base.App.UI.SetVisible("gameRepairSuulkasButton", true);
-				}
-				if (this._repairModeChanged)
-				{
-					this.PostSetProp("SetRepairMode", this._repairMode);
-					this._repairModeChanged = false;
-				}
-				this.PostSetProp("ShowRepairPoints", this._showRepairPoints);
-				this.PostSetProp("RepairWidget", this._repairWidget);
-				if (this._expandAll)
-				{
-					this.PostSetProp("ExpandAll", new object[0]);
-					this._expandAll = false;
-				}
-				this.PostSetProp("Enabled", this._enabled);
-				if (this._repairAll)
-				{
-					this.PostSetProp("RepairAll", new object[0]);
-					this._repairAll = false;
-				}
-				if (this._undoAll)
-				{
-					this.PostSetProp("UndoAll", new object[0]);
-					this._undoAll = false;
-				}
-				if (this._confirmRepairs)
-				{
-					this.PostSetProp("ConfirmRepairs", new object[0]);
-					this._confirmRepairs = false;
-				}
-				this._contentChanged = false;
-				this.PostSetProp("RefreshEnabled", true);
-				this.SetShowEmptyFleets(this._showEmptyFleets);
-			}
+            Performance.FleetWidget perfWidget = new Performance.FleetWidget(this);
+            perfWidget.Refresh();
+
+            //if (this._contentChanged && this._ready)
+            //{
+            //    this.PostSetProp("RefreshEnabled", false);
+            //    this.PostSetProp("SetJumboMode", this._jumboMode);
+            //    this.PostSetProp("EnemySelectionEnabled", this._enemySelectionEnabled);
+            //    this.PostSetProp("SetScrapEnabled", this._scrapEnabled);
+            //    if (this._missionMode != MissionType.NO_MISSION)
+            //    {
+            //        this.SetMissionMode(true);
+            //    }
+            //    else
+            //    {
+            //        this.SetMissionMode(false);
+            //    }
+            //    if (this._fleetsChanged)
+            //    {
+            //        this.ClearFleets();
+            //        this.AccountedSystems.Clear();
+            //        List<FleetInfo> list = new List<FleetInfo>();
+            //        foreach (int current in this._syncedFleets)
+            //        {
+            //            FleetInfo fleetInfo = base.App.GameDatabase.GetFleetInfo(current);
+            //            if (fleetInfo != null)
+            //            {
+            //                list.Add(fleetInfo);
+            //            }
+            //        }
+            //        list = (
+            //            from x in list
+            //            orderby x.SystemID
+            //            select x).ToList<FleetInfo>();
+            //        FleetInfo fleetInfo2 = list.FirstOrDefault((FleetInfo x) => x.IsReserveFleet && x.PlayerID == base.App.LocalPlayer.ID);
+            //        if (fleetInfo2 != null)
+            //        {
+            //            if (!this.AccountedSystems.Contains(fleetInfo2.SystemID))
+            //            {
+            //                this.AccountedSystems.Add(fleetInfo2.SystemID);
+            //                this.SyncSystem(base.App.GameDatabase.GetStarSystemInfo(fleetInfo2.SystemID));
+            //            }
+            //            this.SyncFleet(fleetInfo2);
+            //        }
+            //        FleetInfo fleetInfo3 = list.FirstOrDefault((FleetInfo x) => x.IsDefenseFleet && x.PlayerID == base.App.LocalPlayer.ID);
+            //        if (fleetInfo3 != null)
+            //        {
+            //            if (!this.AccountedSystems.Contains(fleetInfo3.SystemID))
+            //            {
+            //                this.AccountedSystems.Add(fleetInfo3.SystemID);
+            //                this.SyncSystem(base.App.GameDatabase.GetStarSystemInfo(fleetInfo3.SystemID));
+            //            }
+            //            this.SyncFleet(fleetInfo3);
+            //        }
+            //        if (this._listStations)
+            //        {
+            //            List<StationInfo> list2 = new List<StationInfo>();
+            //            foreach (int current2 in this._syncedStations)
+            //            {
+            //                StationInfo stationInfo = base.App.GameDatabase.GetStationInfo(current2);
+            //                if (stationInfo != null)
+            //                {
+            //                    list2.Add(stationInfo);
+            //                }
+            //            }
+            //            this.SyncStations(list2);
+            //        }
+            //        foreach (FleetInfo current3 in list)
+            //        {
+            //            if (current3 != fleetInfo2 && (current3.Type != FleetType.FL_RESERVE || current3.PlayerID == base.App.LocalPlayer.ID) && current3 != fleetInfo3 && (current3.Type != FleetType.FL_DEFENSE || current3.PlayerID == base.App.LocalPlayer.ID))
+            //            {
+            //                if (!this.AccountedSystems.Contains(current3.SystemID))
+            //                {
+            //                    this.AccountedSystems.Add(current3.SystemID);
+            //                    this.SyncSystem(base.App.GameDatabase.GetStarSystemInfo(current3.SystemID));
+            //                }
+            //                this.SyncFleet(current3);
+            //            }
+            //        }
+            //        this._fleetsChanged = false;
+            //    }
+            //    if (this._planetsChanged)
+            //    {
+            //        this.ClearPlanets();
+            //        this.SyncPlanets();
+            //        this._planetsChanged = false;
+            //    }
+            //    this.PostSetProp("SetSelected", this._selected);
+            //    this.PostSetProp("ShowFleetInfo", this._showFleetInfo);
+            //    this.PostSetProp("ShipSelectionEnabled", this._shipSelectionEnabled);
+            //    this.PostSetProp("SetPreferredSelectMode", this._preferredSelectMode);
+            //    if (this._hasSuulka)
+            //    {
+            //        base.App.UI.SetVisible("gameRepairSuulkasButton", true);
+            //    }
+            //    if (this._repairModeChanged)
+            //    {
+            //        this.PostSetProp("SetRepairMode", this._repairMode);
+            //        this._repairModeChanged = false;
+            //    }
+            //    this.PostSetProp("ShowRepairPoints", this._showRepairPoints);
+            //    this.PostSetProp("RepairWidget", this._repairWidget);
+            //    if (this._expandAll)
+            //    {
+            //        this.PostSetProp("ExpandAll", new object[0]);
+            //        this._expandAll = false;
+            //    }
+            //    this.PostSetProp("Enabled", this._enabled);
+            //    if (this._repairAll)
+            //    {
+            //        this.PostSetProp("RepairAll", new object[0]);
+            //        this._repairAll = false;
+            //    }
+            //    if (this._undoAll)
+            //    {
+            //        this.PostSetProp("UndoAll", new object[0]);
+            //        this._undoAll = false;
+            //    }
+            //    if (this._confirmRepairs)
+            //    {
+            //        this.PostSetProp("ConfirmRepairs", new object[0]);
+            //        this._confirmRepairs = false;
+            //    }
+            //    this._contentChanged = false;
+            //    this.PostSetProp("RefreshEnabled", true);
+            //    this.SetShowEmptyFleets(this._showEmptyFleets);
+            //}
 		}
 		public void SetVisibleFleets(Dictionary<int, bool> values)
 		{

@@ -11,6 +11,9 @@ using Kerberos.Sots.Strategy.InhabitedPlanet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using PerformanceStrategy = Bardez.Projects.SwordOfTheStars.SotS2.Fixes.Sots.Strategy;
+
 namespace Kerberos.Sots.UI
 {
 	internal abstract class OverlayMission : Dialog
@@ -614,7 +617,8 @@ namespace Kerberos.Sots.UI
 				List<int> list = null;
 				if (missionCapableShips.Count == 0)
 				{
-					list = DesignLab.GetMissionRequiredDesigns(this.App.Game, this._missionType, this.App.LocalPlayer.ID);
+                    //changed to reference the updated GetMissionRequiredDesigns
+                    list = PerformanceStrategy.DesignLab.GetMissionRequiredDesigns(this.App.Game, this._missionType, this.App.LocalPlayer.ID);
 				}
 				if (list != null)
 				{
