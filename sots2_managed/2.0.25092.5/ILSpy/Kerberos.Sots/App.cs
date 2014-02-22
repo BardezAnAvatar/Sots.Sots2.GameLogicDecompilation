@@ -672,6 +672,7 @@ namespace Kerberos.Sots
 		public void LoadGame(string filename, GameSetup gs)
 		{
 			GameDatabase gameDatabase = GameDatabase.Load(filename, this.AssetDatabase);
+
 			if (!this.Network.IsJoined)
 			{
 				List<FactionInfo> list = gameDatabase.GetFactions().ToList<FactionInfo>();
