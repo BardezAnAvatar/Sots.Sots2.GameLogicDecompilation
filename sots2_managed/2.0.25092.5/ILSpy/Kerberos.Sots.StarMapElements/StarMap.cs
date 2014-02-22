@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using StarMapFix = Bardez.Projects.SwordOfTheStars.SotS2.Fixes.Sots.StarMapElements;
 namespace Kerberos.Sots.StarMapElements
 {
 	[GameObjectType(InteropGameObjectType.IGOT_STARMAP)]
@@ -533,69 +534,71 @@ namespace Kerberos.Sots.StarMapElements
 		}
 		public static bool IsInRange(GameDatabase db, int playerid, int systemId)
 		{
-			return StarMap.IsInRange(db, playerid, db.GetStarSystemOrigin(systemId), 1f, null);
+            return StarMapFix.StarMap.IsInRange(db, playerid, db.GetStarSystemOrigin(systemId), 1f, null);
 		}
 		public static bool IsInRange(GameDatabase db, int playerid, StarSystemInfo ssi, Dictionary<int, List<ShipInfo>> cachedFleetShips = null)
 		{
-			return StarMap.IsInRange(db, playerid, ssi.Origin, 1f, cachedFleetShips);
+            return StarMapFix.StarMap.IsInRange(db, playerid, ssi.Origin, 1f, cachedFleetShips);
 		}
 		public static bool IsInRange(GameDatabase db, int playerid, Vector3 loc, float rangeMultiplier = 1f, Dictionary<int, List<ShipInfo>> cachedFleetShips = null)
-		{
-			if (StarMap.AlwaysInRange)
-			{
-				return true;
-			}
-			List<int> list = (
-				from x in db.GetPlayerInfos()
-				where x.ID == playerid || db.GetDiplomacyStateBetweenPlayers(x.ID, playerid) == DiplomacyState.ALLIED
-				select x.ID).ToList<int>();
-			List<int> list2 = new List<int>();
-			foreach (int current in list)
-			{
-				list2.AddRange(db.GetPlayerColonySystemIDs(current));
-			}
-			foreach (int current2 in list2)
-			{
-				StarSystemInfo starSystemInfo = db.GetStarSystemInfo(current2);
-				if (!(starSystemInfo == null))
-				{
-					float systemStratSensorRange = db.GetSystemStratSensorRange(current2, playerid);
-					float length = (starSystemInfo.Origin - loc).Length;
-					if (length <= systemStratSensorRange * rangeMultiplier)
-					{
-						bool result = true;
-						return result;
-					}
-				}
-			}
-			List<FleetInfo> list3 = new List<FleetInfo>();
-			foreach (int current3 in list)
-			{
-				list3.AddRange(db.GetFleetInfosByPlayerID(current3, FleetType.FL_NORMAL | FleetType.FL_DEFENSE | FleetType.FL_GATE | FleetType.FL_CARAVAN | FleetType.FL_ACCELERATOR));
-			}
-			float num = db.AssetDatabase.DefaultStratSensorRange;
-			foreach (FleetInfo current4 in list3)
-			{
-				List<ShipInfo> cachedShips = null;
-				if (cachedFleetShips != null && !cachedFleetShips.TryGetValue(current4.ID, out cachedShips))
-				{
-					cachedShips = new List<ShipInfo>();
-				}
-				num = GameSession.GetFleetSensorRange(db.AssetDatabase, db, current4, cachedShips);
-				if (num == 0f && db.GetShipsByFleetID(current4.ID).Any<int>())
-				{
-					num = db.AssetDatabase.DefaultStratSensorRange;
-				}
-				FleetLocation fleetLocation = db.GetFleetLocation(current4.ID, false);
-				Vector3 coords = fleetLocation.Coords;
-				float length2 = (coords - loc).Length;
-				if (length2 <= num * rangeMultiplier)
-				{
-					bool result = true;
-					return result;
-				}
-			}
-			return false;
+        {
+            return StarMapFix.StarMap.IsInRange(db, playerid, loc, rangeMultiplier, cachedFleetShips);
+
+            //if (StarMap.AlwaysInRange)
+            //{
+            //    return true;
+            //}
+            //List<int> list = (
+            //    from x in db.GetPlayerInfos()
+            //    where x.ID == playerid || db.GetDiplomacyStateBetweenPlayers(x.ID, playerid) == DiplomacyState.ALLIED
+            //    select x.ID).ToList<int>();
+            //List<int> list2 = new List<int>();
+            //foreach (int current in list)
+            //{
+            //    list2.AddRange(db.GetPlayerColonySystemIDs(current));
+            //}
+            //foreach (int current2 in list2)
+            //{
+            //    StarSystemInfo starSystemInfo = db.GetStarSystemInfo(current2);
+            //    if (!(starSystemInfo == null))
+            //    {
+            //        float systemStratSensorRange = db.GetSystemStratSensorRange(current2, playerid);
+            //        float length = (starSystemInfo.Origin - loc).Length;
+            //        if (length <= systemStratSensorRange * rangeMultiplier)
+            //        {
+            //            bool result = true;
+            //            return result;
+            //        }
+            //    }
+            //}
+            //List<FleetInfo> list3 = new List<FleetInfo>();
+            //foreach (int current3 in list)
+            //{
+            //    list3.AddRange(db.GetFleetInfosByPlayerID(current3, FleetType.FL_NORMAL | FleetType.FL_DEFENSE | FleetType.FL_GATE | FleetType.FL_CARAVAN | FleetType.FL_ACCELERATOR));
+            //}
+            //float num = db.AssetDatabase.DefaultStratSensorRange;
+            //foreach (FleetInfo current4 in list3)
+            //{
+            //    List<ShipInfo> cachedShips = null;
+            //    if (cachedFleetShips != null && !cachedFleetShips.TryGetValue(current4.ID, out cachedShips))
+            //    {
+            //        cachedShips = new List<ShipInfo>();
+            //    }
+            //    num = GameSession.GetFleetSensorRange(db.AssetDatabase, db, current4, cachedShips);
+            //    if (num == 0f && db.GetShipsByFleetID(current4.ID).Any<int>())
+            //    {
+            //        num = db.AssetDatabase.DefaultStratSensorRange;
+            //    }
+            //    FleetLocation fleetLocation = db.GetFleetLocation(current4.ID, false);
+            //    Vector3 coords = fleetLocation.Coords;
+            //    float length2 = (coords - loc).Length;
+            //    if (length2 <= num * rangeMultiplier)
+            //    {
+            //        bool result = true;
+            //        return result;
+            //    }
+            //}
+            //return false;
 		}
 		public static bool IsInRange(GameDatabase db, int playerid, Vector3 loc, Dictionary<FleetInfo, List<ShipInfo>> fleetShips, List<StarSystemInfo> colonySystems)
 		{
