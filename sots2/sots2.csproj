@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{67EA225F-0199-4472-81F3-3C87A738A490}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <AssemblyName>sots2</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.VisualC" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$_s__CatchableTypeArray$_extraBytes_8.cs" />
+    <Compile Include="$_s__RTTIBaseClassArray$_extraBytes_4.cs" />
+    <Compile Include="$_s__RTTIBaseClassArray$_extraBytes_8.cs" />
+    <Compile Include="$_TypeDescriptor$_extraBytes_20.cs" />
+    <Compile Include="$_TypeDescriptor$_extraBytes_28.cs" />
+    <Compile Include="$_TypeDescriptor$_extraBytes_43.cs" />
+    <Compile Include="$_TypeDescriptor$_extraBytes_86.cs" />
+    <Compile Include="$_TypeDescriptor$_extraBytes_88.cs" />
+    <Compile Include="$_TypeDescriptor$_extraBytes_90.cs" />
+    <Compile Include="$_TypeDescriptor$_extraBytes_92.cs" />
+    <Compile Include="-CppImplementationDetails-\$ArrayType$$$BY00Q6MPBXXZ.cs" />
+    <Compile Include="-CppImplementationDetails-\$ArrayType$$$BY01$$CB_W.cs" />
+    <Compile Include="-CppImplementationDetails-\$ArrayType$$$BY01Q6AXXZ.cs" />
+    <Compile Include="-CppImplementationDetails-\$ArrayType$$$BY02Q6AXXZ.cs" />
+    <Compile Include="-CppImplementationDetails-\$ArrayType$$$BY03$$CB_W.cs" />
+    <Compile Include="-CppImplementationDetails-\$ArrayType$$$BY03Q6AXXZ.cs" />
+    <Compile Include="-CppImplementationDetails-\$ArrayType$$$BY04$$CBD.cs" />
+    <Compile Include="-CppImplementationDetails-\$ArrayType$$$BY06$$CB_W.cs" />
+    <Compile Include="-CppImplementationDetails-\$ArrayType$$$BY07$$CBD.cs" />
+    <Compile Include="-CppImplementationDetails-\$ArrayType$$$BY08$$CBD.cs" />
+    <Compile Include="-CppImplementationDetails-\$ArrayType$$$BY08$$CB_W.cs" />
+    <Compile Include="-CppImplementationDetails-\$ArrayType$$$BY09$$CBD.cs" />
+    <Compile Include="-CppImplementationDetails-\$ArrayType$$$BY0A@P6AHXZ.cs" />
+    <Compile Include="-CppImplementationDetails-\$ArrayType$$$BY0A@P6AXXZ.cs" />
+    <Compile Include="-CppImplementationDetails-\$ArrayType$$$BY0BA@$$CBD.cs" />
+    <Compile Include="-CppImplementationDetails-\$ArrayType$$$BY0BC@$$CBD.cs" />
+    <Compile Include="-CppImplementationDetails-\$ArrayType$$$BY0BD@$$CBD.cs" />
+    <Compile Include="-CppImplementationDetails-\$ArrayType$$$BY0BI@$$CBD.cs" />
+    <Compile Include="-CppImplementationDetails-\$ArrayType$$$BY0M@$$CB_W.cs" />
+    <Compile Include="-CppImplementationDetails-\$ArrayType$$$BY0N@$$CBD.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$P8APICallbackDelegator@Steam@Sots@Kerberos@@AEXPAUGlobalStatsReceived_t@@@Z.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$P8APICallbackDelegator@Steam@Sots@Kerberos@@AEXPAUUserAchievementStored_t@@@Z.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$P8APICallbackDelegator@Steam@Sots@Kerberos@@AEXPAUUserStatsReceived_t@@@Z.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$P8APICallbackDelegator@Steam@Sots@Kerberos@@AEXPAUUserStatsStored_t@@@Z.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@D.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@E.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@F.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@G.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@H.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@I.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@J.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@K.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@M.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@N.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@PAD.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@PAE.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@PAF.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@PAG.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@PAH.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@PAI.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@PAJ.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@PAK.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@PAM.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@PAN.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@PAPAUIDispatch@@.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@PAPAUIUnknown@@.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@PAPA_W.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@PATtagCY@@.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@PAUIDispatch@@.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@PAUIUnknown@@.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@PA_J.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@PA_K.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@PA_W.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@TtagCY@@.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@_J.cs" />
+    <Compile Include="-CppImplementationDetails-\$PTMType$QQtagVARIANT@@_K.cs" />
+    <Compile Include="-CrtImplementationDetails-\LanguageSupport.cs" />
+    <Compile Include="-CrtImplementationDetails-\ModuleLoadException.cs" />
+    <Compile Include="-CrtImplementationDetails-\ModuleLoadExceptionHandlerException.cs" />
+    <Compile Include="-CrtImplementationDetails-\ModuleUninitializer.cs" />
+    <Compile Include="-CrtImplementationDetails-\Progress.cs" />
+    <Compile Include="-CrtImplementationDetails-\ThisModule.cs" />
+    <Compile Include="-CrtImplementationDetails-\TriBool.cs" />
+    <Compile Include="ATL\CAtlComModule.cs" />
+    <Compile Include="ATL\CAtlReleaseManagedClassFactories.cs" />
+    <Compile Include="ATL\_ATL_OBJMAP_ENTRY30.cs" />
+    <Compile Include="CCallback-Kerberos.cs" />
+    <Compile Include="CCallbackBase.cs" />
+    <Compile Include="CGameID.cs" />
+    <Compile Include="gcroot-Kerberos.cs" />
+    <Compile Include="gcroot-System.cs" />
+    <Compile Include="GlobalStatsReceived_t.cs" />
+    <Compile Include="ICLRRuntimeHost.cs" />
+    <Compile Include="ICorRuntimeHost.cs" />
+    <Compile Include="ISteamApps.cs" />
+    <Compile Include="ISteamFriends.cs" />
+    <Compile Include="ISteamUser.cs" />
+    <Compile Include="ISteamUserStats.cs" />
+    <Compile Include="ISteamUtils.cs" />
+    <Compile Include="IUnknown.cs" />
+    <Compile Include="Kerberos.Sots.Engine\ManagedMessageQueue.cs" />
+    <Compile Include="Kerberos.Sots.Engine\MarsEngine.cs" />
+    <Compile Include="Kerberos.Sots.Engine\MarsFileSystem.cs" />
+    <Compile Include="Kerberos.Sots.Engine\MarsLogHost.cs" />
+    <Compile Include="Kerberos.Sots.Engine\MarsLogListener.cs" />
+    <Compile Include="Kerberos.Sots.Engine\MarsStream.cs" />
+    <Compile Include="Kerberos.Sots.Steam\APICallbackDelegator.cs" />
+    <Compile Include="Kerberos.Sots.Steam\SteamAPI.cs" />
+    <Compile Include="mars.fs\IFileSystem.cs" />
+    <Compile Include="mars.fs\IStream.cs" />
+    <Compile Include="mars.fs\SeekOrigin.cs" />
+    <Compile Include="mars.ipc\IMessageQueue.cs" />
+    <Compile Include="mars.log\ILogHost.cs" />
+    <Compile Include="mars.log\ILogListener.cs" />
+    <Compile Include="mars.log\LogLevel.cs" />
+    <Compile Include="mars.log\LogMessageInfo.cs" />
+    <Compile Include="mars.log\LogSeverity.cs" />
+    <Compile Include="mars.script\IScriptEngine.cs" />
+    <Compile Include="mars.script\LoadScriptParams.cs" />
+    <Compile Include="std\allocator-char-.cs" />
+    <Compile Include="std\allocator-std.cs" />
+    <Compile Include="std\bad_alloc.cs" />
+    <Compile Include="std\basic_string-char,std.cs" />
+    <Compile Include="std\basic_string-wchar_t,std.cs" />
+    <Compile Include="std\exception.cs" />
+    <Compile Include="std\vector-std.cs" />
+    <Compile Include="std\_Container_base0.cs" />
+    <Compile Include="std\_Nonscalar_ptr_iterator_tag.cs" />
+    <Compile Include="UserAchievementStored_t.cs" />
+    <Compile Include="UserStatsReceived_t.cs" />
+    <Compile Include="UserStatsStored_t.cs" />
+    <Compile Include="_EXCEPTION_POINTERS.cs" />
+    <Compile Include="_GUID.cs" />
+    <Compile Include="_RTL_CRITICAL_SECTION.cs" />
+    <Compile Include="_s__CatchableType.cs" />
+    <Compile Include="_s__RTTIBaseClassDescriptor2.cs" />
+    <Compile Include="_s__RTTIClassHierarchyDescriptor.cs" />
+    <Compile Include="_s__RTTICompleteObjectLocator.cs" />
+    <Compile Include="_s__ThrowInfo.cs" />
+    <Compile Include="__enative_startup_state.cs" />
+    <Compile Include="__s_GUID.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
