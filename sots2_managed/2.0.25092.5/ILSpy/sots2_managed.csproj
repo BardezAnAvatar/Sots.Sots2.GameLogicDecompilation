@@ -38,9 +38,24 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bardez\Projects\SwordOfTheStars\SotS2\Fixes\Sots\Additions\Data Structures.cs" />
+    <Compile Include="Bardez\Projects\SwordOfTheStars\SotS2\Fixes\Sots\Data\Armor Instances Cache.cs" />
+    <Compile Include="Bardez\Projects\SwordOfTheStars\SotS2\Fixes\Sots\Data\Weapon Instances Cache.cs" />
+    <Compile Include="Bardez\Projects\SwordOfTheStars\SotS2\Fixes\Sots\Data\Section Instances Cache.cs" />
+    <Compile Include="Bardez\Projects\SwordOfTheStars\SotS2\Fixes\Sots\Data\Module Instances Cache.cs" />
+    <Compile Include="Bardez\Projects\SwordOfTheStars\SotS2\Fixes\Sots\Data\Ships Cache.cs" />
+    <Compile Include="Bardez\Projects\SwordOfTheStars\SotS2\Fixes\Sots\Data\GameDatabase.cs" />
+    <Compile Include="Bardez\Projects\SwordOfTheStars\SotS2\Fixes\Sots\Data\Queries.cs" />
+    <Compile Include="Bardez\Projects\SwordOfTheStars\SotS2\Fixes\Sots\StarFleet\StarFleet.cs" />
+    <Compile Include="Bardez\Projects\SwordOfTheStars\SotS2\Fixes\Sots\StarMapElements\StarMap.cs" />
+    <Compile Include="Bardez\Projects\SwordOfTheStars\SotS2\Fixes\Sots\Strategy\Design Lab.cs" />
+    <Compile Include="Bardez\Projects\SwordOfTheStars\SotS2\Fixes\Sots\Strategy\Game Session.cs" />
     <Compile Include="Bardez\Projects\SwordOfTheStars\SotS2\Fixes\Sots\Strategy\InhabitedPanet\Colony.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Bardez\Projects\SwordOfTheStars\SotS2\Fixes\Sots\Strategy\Strategic AI.cs" />
+    <Compile Include="Bardez\Projects\SwordOfTheStars\SotS2\Fixes\Sots\UI\FleetWidget.cs" />
+    <Compile Include="Bardez\Projects\SwordOfTheStars\SotS2\Utility\Reflection Helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1341,12 +1356,26 @@
     <Compile Include="Meebey.SmartIrc4net\WriteLineEventHandler.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Kerberos.Sots.Console\Console.resources" />
-    <EmbeddedResource Include="Kerberos.Sots.Console\ConsoleResources.resources" />
-    <EmbeddedResource Include="Kerberos.Sots.Console\ShellControl.resources" />
-    <EmbeddedResource Include="Kerberos.Sots.Console\ShellTextBox.resources" />
+    <EmbeddedResource Include="Kerberos.Sots.Console\Console.resx">
+      <DependentUpon>Console.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Kerberos.Sots.Console\ConsoleResources.resx">
+      <DependentUpon>ConsoleResources.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Kerberos.Sots.Console\ShellControl.resx">
+      <DependentUpon>ShellControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Kerberos.Sots.Console\ShellTextBox.resx">
+      <DependentUpon>ShellTextBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Kerberos.Sots.Data\empty_game.sql" />
-    <EmbeddedResource Include="Kerberos.Sots.Data\Queries.resources" />
+    <EmbeddedResource Include="Kerberos.Sots.Data\Queries.resx">
+      <DependentUpon>Queries.cs</DependentUpon>
+    </EmbeddedResource>
+    <!--<EmbeddedResource Include="Kerberos.Sots.Data\Queries.resources" />-->
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Bardez\Projects\SwordOfTheStars\SotS2\Fixes\Sots\GameStates\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

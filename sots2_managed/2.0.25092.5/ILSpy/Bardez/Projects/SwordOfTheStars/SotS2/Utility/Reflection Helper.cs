@@ -67,7 +67,7 @@ namespace Bardez.Projects.SwordOfTheStars.SotS2.Utility
             return privateVariable;
         }
 
-        /// <summary>Exposes a FleetWidget's private property</summary>
+        /// <summary>Exposes a locked instance's private property</summary>
         /// <typeparam name="FieldType">Type of value to return</typeparam>
         /// <typeparam name="BaseType">Type of value to query</typeparam>
         /// <param name="instance">Object instance to extract from</param>
@@ -91,6 +91,50 @@ namespace Bardez.Projects.SwordOfTheStars.SotS2.Utility
             return privateVariable;
         }
 
+        /// <summary>Sets a locked instance's private property</summary>
+        /// <typeparam name="FieldType">Type of value to return</typeparam>
+        /// <typeparam name="BaseType">Type of value to query</typeparam>
+        /// <param name="instance">Object instance to extract from</param>
+        /// <param name="propertyName">Name of the property to expose</param>
+        /// <param name="value">Value to set the property to</param>
+        public static void PrivateProperty<BaseType, FieldType>(BaseType instance, String propertyName, FieldType value)
+        {
+            Type t = typeof(BaseType);
+
+            //HACK: use reflection to access a private method.
+            FieldType privateVariable = default(FieldType);
+            PropertyInfo privateProperty = t.GetProperty(propertyName, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
+            if (privateProperty == null)
+                throw new NullReferenceException(String.Format("Could not retrieve the \"{0}\" PropertyInfo for {1}.", propertyName, t.FullName));
+            else
+            {
+                MethodInfo mi = privateProperty.GetSetMethod(true);
+                privateVariable = (FieldType)(mi.Invoke(instance, new Object[] { value} ));
+            }
+        }
+
+        /// <summary>Sets a locked instance's public/private property</summary>
+        /// <typeparam name="FieldType">Type of value to return</typeparam>
+        /// <typeparam name="BaseType">Type of value to query</typeparam>
+        /// <param name="instance">Object instance to extract from</param>
+        /// <param name="propertyName">Name of the property to expose</param>
+        /// <param name="value">Value to set the property to</param>
+        public static void PublicProperty<BaseType, FieldType>(BaseType instance, String propertyName, FieldType value)
+        {
+            Type t = typeof(BaseType);
+
+            //HACK: use reflection to access a private method.
+            FieldType privateVariable = default(FieldType);
+            PropertyInfo privateProperty = t.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
+            if (privateProperty == null)
+                throw new NullReferenceException(String.Format("Could not retrieve the \"{0}\" PropertyInfo for {1}.", propertyName, t.FullName));
+            else
+            {
+                MethodInfo mi = privateProperty.GetSetMethod(true);
+                privateVariable = (FieldType)(mi.Invoke(instance, new Object[] { value }));
+            }
+        }
+
         /// <summary>Returns the method to invoke for a base type</summary>
         /// <param name="methodName">Name of the method to expose</param>
         /// <returns>The MethodInfo for the method to be invoked</returns>
@@ -100,6 +144,21 @@ namespace Bardez.Projects.SwordOfTheStars.SotS2.Utility
 
             //HACK: use reflection to access a private method.
             MethodInfo privateMethod = t.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
+            if (privateMethod == null)
+                throw new NullReferenceException(String.Format("Could not retrieve the \"{0}\" MethodInfo for {1}.", methodName, t.FullName));
+
+            return privateMethod;
+        }
+
+        /// <summary>Returns the method to invoke for a base type</summary>
+        /// <param name="methodName">Name of the method to expose</param>
+        /// <returns>The MethodInfo for the method to be invoked</returns>
+        public static MethodInfo PrivateStaticMethod<BaseType>(String methodName)
+        {
+            Type t = typeof(BaseType);
+
+            //HACK: use reflection to access a private method.
+            MethodInfo privateMethod = t.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
             if (privateMethod == null)
                 throw new NullReferenceException(String.Format("Could not retrieve the \"{0}\" MethodInfo for {1}.", methodName, t.FullName));
 

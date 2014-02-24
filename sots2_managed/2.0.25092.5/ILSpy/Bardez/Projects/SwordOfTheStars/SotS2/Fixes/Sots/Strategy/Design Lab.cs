@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Kerberos.Sots.Data;
-using Kerberos.Sots.Strategy;
 using Kerberos.Sots.StarFleet;
 
+using Original = Kerberos.Sots.Strategy;
 using PerformanceStarFleet = Bardez.Projects.SwordOfTheStars.SotS2.Fixes.Sots.StarFleet;
 using PerformanceData = Bardez.Projects.SwordOfTheStars.SotS2.Fixes.Sots.Data;
 
@@ -19,11 +19,11 @@ namespace Bardez.Projects.SwordOfTheStars.SotS2.Fixes.Sots.Strategy
         /// <param name="missionType">Type of mission to use as criteria</param>
         /// <param name="playerId">Unique ID of the player to get designs for</param>
         /// <returns>The collection of the player's designs' IDs fitting the specified criteria</returns>
-        internal static List<Int32> GetMissionRequiredDesigns(GameSession game, MissionType missionType, Int32 playerId)
+        internal static List<Int32> GetMissionRequiredDesigns(Original.GameSession game, MissionType missionType, Int32 playerId)
         {
             List<Int32> designIDs = new List<Int32>();
 
-            Func<GameSession, IList<String>> criteria = null;
+            Func<Original.GameSession, IList<String>> criteria = null;
 
             switch (missionType)
             {

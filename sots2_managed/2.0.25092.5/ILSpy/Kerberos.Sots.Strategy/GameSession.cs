@@ -25,6 +25,7 @@ using System.IO;
 using System.Linq;
 
 using PerformanceInhabitedPlanet = Bardez.Projects.SwordOfTheStars.SotS2.Fixes.Sots.Strategy.InhabitedPanet;
+using PerformanceStrategy = Bardez.Projects.SwordOfTheStars.SotS2.Fixes.Sots.Strategy;
 
 namespace Kerberos.Sots.Strategy
 {
@@ -87,12 +88,10 @@ namespace Kerberos.Sots.Strategy
             public NetRevenueSummary(App game, int playerId, double tradeRevenue)
             {
                 Func<TreatyInfo, bool> predicate = null;
-                Func<ColonyInfo, double> selector = null;
-                Func<ColonyInfo, double> func3 = null;
                 GameDatabase db = game.GameDatabase;
                 AssetDatabase assetdb = game.AssetDatabase;
-                List<ColonyInfo> source = db.GetPlayerColoniesByPlayerId(playerId).ToList<ColonyInfo>();
-                List<ColonyInfo> list2 = new List<ColonyInfo>();
+                List<ColonyInfo> playerColonies = db.GetPlayerColoniesByPlayerId(playerId).ToList<ColonyInfo>();
+                List<ColonyInfo> protectorateColonies = new List<ColonyInfo>();
                 if (predicate == null)
                 {
                     predicate = x => (x.Type == TreatyType.Protectorate) && (x.InitiatingPlayerId == playerId);
@@ -101,21 +100,16 @@ namespace Kerberos.Sots.Strategy
                 {
                     if (info.Active)
                     {
-                        list2.AddRange(db.GetPlayerColoniesByPlayerId(info.ReceivingPlayerId));
+                        protectorateColonies.AddRange(db.GetPlayerColoniesByPlayerId(info.ReceivingPlayerId));
                     }
                 }
                 PlayerInfo playerInfo = db.GetPlayerInfo(playerId);
                 this.IORevenue = this.GetBaseIndustrialOutputRevenue(game.Game, db, playerInfo) * game.GameDatabase.GetStratModifierFloatToApply(StratModifiers.IORevenue, playerInfo.ID);
                 this.TradeRevenue = tradeRevenue;
-                if (selector == null)
-                {
-                    selector = x => Kerberos.Sots.Strategy.InhabitedPlanet.Colony.GetTaxRevenue(game, x);
-                }
-                if (func3 == null)
-                {
-                    func3 = x => Kerberos.Sots.Strategy.InhabitedPlanet.Colony.GetTaxRevenue(game, x);
-                }
-                this.TaxRevenue = source.Sum<ColonyInfo>(selector) + list2.Sum<ColonyInfo>(func3);
+                
+                //this.TaxRevenue = source.Sum<ColonyInfo>(x => Kerberos.Sots.Strategy.InhabitedPlanet.Colony.GetTaxRevenue(game, x)) + list2.Sum<ColonyInfo>(x => Kerberos.Sots.Strategy.InhabitedPlanet.Colony.GetTaxRevenue(game, x));
+                this.TaxRevenue = PerformanceInhabitedPlanet.Colony.GetTaxRevenue(game, playerInfo, playerColonies) + PerformanceInhabitedPlanet.Colony.GetTaxRevenue(game, playerInfo, protectorateColonies);
+
                 float num = db.GetNameValue<float>("EconomicEfficiency") / 100f;
                 this.TradeRevenue *= num;
                 this.TradeRevenue *= game.GameDatabase.GetStratModifierFloatToApply(StratModifiers.TradeRevenue, playerId);
@@ -1773,32 +1767,35 @@ namespace Kerberos.Sots.Strategy
 		}
 		public void ProcessEndTurn()
 		{
-			this.TurnTimer.StopTurnTimer();
-			this.App.HotKeyManager.SetEnabled(false);
-			if (this.m_Combats.Count<PendingCombat>() > 0)
-			{
-				return;
-			}
-			if (this.App.Network.IsHosting || !this.App.GameSetup.IsMultiplayer)
-			{
-				StrategicAI.UpdateInfo updateInfo = new StrategicAI.UpdateInfo(this.GameDatabase);
-				foreach (Kerberos.Sots.PlayerFramework.Player current in this.m_Players)
-				{
-					if (current.IsAI() && current.Faction.IsPlayable)
-					{
-						current.GetAI().Update(updateInfo);
-					}
-				}
-			}
-			if (GameSession.SimAITurns == 0 && this.App.GameSettings.AutoSave)
-			{
-				this.Autosave("(Precombat)");
-			}
-			this.State = SimState.SS_COMBAT;
-			if (!this.App.GameSetup.IsMultiplayer)
-			{
-				this.ProcessMidTurn();
-			}
+            PerformanceStrategy.GameSession performanceGS = new PerformanceStrategy.GameSession(this);
+            performanceGS.ProcessEndTurn();
+
+            //this.TurnTimer.StopTurnTimer();
+            //this.App.HotKeyManager.SetEnabled(false);
+            //if (this.m_Combats.Count<PendingCombat>() > 0)
+            //{
+            //    return;
+            //}
+            //if (this.App.Network.IsHosting || !this.App.GameSetup.IsMultiplayer)
+            //{
+            //    StrategicAI.UpdateInfo updateInfo = new StrategicAI.UpdateInfo(this.GameDatabase);
+            //    foreach (Kerberos.Sots.PlayerFramework.Player current in this.m_Players)
+            //    {
+            //        if (current.IsAI() && current.Faction.IsPlayable)
+            //        {
+            //            current.GetAI().Update(updateInfo);
+            //        }
+            //    }
+            //}
+            //if (GameSession.SimAITurns == 0 && this.App.GameSettings.AutoSave)
+            //{
+            //    this.Autosave("(Precombat)");
+            //}
+            //this.State = SimState.SS_COMBAT;
+            //if (!this.App.GameSetup.IsMultiplayer)
+            //{
+            //    this.ProcessMidTurn();
+            //}
 		}
 		public void ProcessMidTurn()
 		{

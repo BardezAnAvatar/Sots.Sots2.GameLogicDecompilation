@@ -6,6 +6,9 @@ using Kerberos.Sots.Strategy.InhabitedPlanet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using PerformanceInhabitedPlanet = Bardez.Projects.SwordOfTheStars.SotS2.Fixes.Sots.Strategy.InhabitedPanet;
+
 namespace Kerberos.Sots.Strategy
 {
 	internal class Budget
@@ -48,7 +51,10 @@ namespace Kerberos.Sots.Strategy
 			this.SavingsInterest = ((playerFactionInfo.Name != "loa") ? GameSession.CalculateSavingsInterest(game, playerInfo) : 0.0);
 			this.DebtInterest = ((playerFactionInfo.Name != "loa") ? GameSession.CalculateDebtInterest(game, playerInfo) : 0.0);
 			this.TradeRevenue = incomeFromTrade;
-			this.TaxRevenue = colonyInfos.Sum((ColonyInfo x) => Colony.GetTaxRevenue(game.App, playerInfo, x));
+			
+            //this.TaxRevenue = colonyInfos.Sum((ColonyInfo x) => Colony.GetTaxRevenue(game.App, playerInfo, x));
+            this.TaxRevenue = PerformanceInhabitedPlanet.Colony.GetTaxRevenue(game.App, playerInfo, colonyInfos);
+
 			float num = gamedb.GetNameValue<float>("EconomicEfficiency") / 100f;
 			this.TradeRevenue *= (double)num;
 			this.TradeRevenue *= (double)game.GameDatabase.GetStratModifierFloatToApply(StratModifiers.TradeRevenue, playerInfo.ID);

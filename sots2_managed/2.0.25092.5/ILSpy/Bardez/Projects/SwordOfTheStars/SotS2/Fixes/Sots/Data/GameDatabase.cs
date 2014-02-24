@@ -9,16 +9,146 @@ using Kerberos.Sots;
 using Kerberos.Sots.Data;
 using Kerberos.Sots.Data.ModuleFramework;
 using Kerberos.Sots.Data.ShipFramework;
+using Kerberos.Sots.Data.WeaponFramework;
 using Kerberos.Sots.Data.SQLite;
+using Kerberos.Sots.GameObjects;
+using Kerberos.Sots.PlayerFramework;
 using Kerberos.Sots.ShipFramework;
 using Kerberos.Sots.Strategy;
 using Kerberos.Sots.Strategy.InhabitedPlanet;
 
+using Bardez.Projects.SwordOfTheStars.SotS2.Fixes.Sots.Additions;
+using Bardez.Projects.SwordOfTheStars.SotS2.Utility;
+
+using Original = Kerberos.Sots.Data;
+
 namespace Bardez.Projects.SwordOfTheStars.SotS2.Fixes.Sots.Data
 {
     /// <summary>This class contains code fixes to general SotS2 logic in namespace Kerberos.Sots.Data.GameDatabase</summary>
-	internal static class GameDatabase
+	internal class GameDatabase
     {
+        #region Fields
+        /// <summary>Kerberos GameDatabase to extend</summary>
+        protected Original.GameDatabase BaseInstance;
+        #endregion
+
+
+        #region Kerberos exposed members
+        #region Fields
+        protected DataObjectCache _dom
+        {
+            get { return ReflectionHelper.PrivateField<Original.GameDatabase, DataObjectCache>(this.BaseInstance, "_dom"); }
+        }
+
+        protected AssetDatabase assetdb
+        {
+            get { return ReflectionHelper.PrivateField<Original.GameDatabase, AssetDatabase>(this.BaseInstance, "assetdb"); }
+        }
+        #endregion
+
+
+        #region Properties
+        public AssetDatabase AssetDatabase
+        {
+            get { return this.BaseInstance.AssetDatabase; }
+        }
+        #endregion
+
+
+        #region Methods
+        protected void AddNumShipsBuiltFromDesign(int designID, int count)
+        {
+            MethodInfo mi = ReflectionHelper.PrivateMethod<Kerberos.Sots.Data.GameDatabase>("AddNumShipsBuiltFromDesign");
+            mi.Invoke(this.BaseInstance, new Object[] { designID, count });
+        }
+
+        protected void TryAddFleetShip(int shipId, int fleetId)
+        {
+            MethodInfo mi = ReflectionHelper.PrivateMethod<Kerberos.Sots.Data.GameDatabase>("TryAddFleetShip");
+            mi.Invoke(this.BaseInstance, new Object[] { shipId, fleetId });
+        }
+
+        protected FleetInfo GetFleetInfo(Row row)
+        {
+            MethodInfo mi = ReflectionHelper.PrivateMethod<Kerberos.Sots.Data.GameDatabase>("GetFleetInfo");
+            Object result = mi.Invoke(this.BaseInstance, new Object[] { row });
+            return result as FleetInfo;
+        }
+
+        protected void AddCachedShipNameReference(int playerId, string shipName)
+        {
+            MethodInfo mi = ReflectionHelper.PrivateMethod<Kerberos.Sots.Data.GameDatabase>("AddCachedShipNameReference");
+            mi.Invoke(this.BaseInstance, new Object[] { playerId, shipName });
+        }
+
+        public FleetInfo GetFleetInfo(int fleetID)
+        {
+            return this.BaseInstance.GetFleetInfo(fleetID);
+        }
+
+        public DesignInfo GetDesignInfo(int designID)
+        {
+            return this.BaseInstance.GetDesignInfo(designID);
+        }
+
+        public int GetPlayerFactionID(int playerId)
+        {
+            return this.BaseInstance.GetPlayerFactionID(playerId);
+        }
+
+        public int GetNumShipsBuiltFromDesign(int designID)
+        {
+            return this.BaseInstance.GetNumShipsBuiltFromDesign(designID);
+        }
+
+        public string GetDefaultShipName(int designID, int serial)
+        {
+            return this.BaseInstance.GetDefaultShipName(designID, serial);
+        }
+
+        public string ResolveNewShipName(int playerId, string name)
+        {
+            return this.BaseInstance.ResolveNewShipName(playerId, name);
+        }
+
+        public int GetTurnCount()
+        {
+            return this.BaseInstance.GetTurnCount();
+        }
+
+        public IEnumerable<SectionEnumerations.DesignAttribute> GetDesignAttributesForDesign(int id)
+        {
+            return this.BaseInstance.GetDesignAttributesForDesign(id);
+        }
+
+        public string GetTechFileID(int techId)
+        {
+            return this.BaseInstance.GetTechFileID(techId);
+        }
+
+        public string GetModuleAsset(int moduleId)
+        {
+            return this.BaseInstance.GetModuleAsset(moduleId);
+        }
+
+        public string GetWeaponAsset(int weaponId)
+        {
+            return this.BaseInstance.GetWeaponAsset(weaponId);
+        }
+        #endregion
+        #endregion
+
+
+        #region Construction
+        /// <summary>Definition constructor</summary>
+        /// <param name="instance">Kerberos instance to extend</param>
+        public GameDatabase(Original.GameDatabase instance)
+        {
+            this.BaseInstance = instance;
+        }
+        #endregion
+
+
         /// <summary>Returns the specified system's strategic sensor range for the specified player</summary>
         /// <param name="db">Game database to query</param>
         /// <param name="systemid">Unique ID of the system to check on</param>
@@ -36,12 +166,7 @@ namespace Bardez.Projects.SwordOfTheStars.SotS2.Fixes.Sots.Data
             };
             
             //HACK: use reflection to access a private type.
-            DataObjectCache cache = null;
-            FieldInfo dom = typeof(Kerberos.Sots.Data.GameDatabase).GetField("_dom", BindingFlags.NonPublic | BindingFlags.Instance);
-            if (dom == null)
-                throw new NullReferenceException("Could not retrieve the \"_dom\" FieldInfo for the Kerberos GameDatabase.");
-            else
-                cache = dom.GetValue(db) as DataObjectCache;
+            DataObjectCache cache = ReflectionHelper.PrivateField<Kerberos.Sots.Data.GameDatabase, DataObjectCache>(db, "_dom");
 
             if (!cache.CachedSystemStratSensorRanges.TryGetValue(key, out sensorRange))
             {
@@ -222,6 +347,387 @@ namespace Bardez.Projects.SwordOfTheStars.SotS2.Fixes.Sots.Data
                 designIds.Add(Int32.Parse(row[0]));
 
             return designIds;
+        }
+
+        /// <summary>Exposes the entire collection of SectionInstanceInfos, indexed by their ship IDs</summary>
+        /// <param name="db">Kerberos GameDatabase to query</param>
+        /// <returns>Entire collection of SectionInstanceInfos, indexed by their ship IDs</returns>
+        /// <remarks>
+        ///     Used to speed up the end of turn processing.
+        ///     This will drop ship section instances that have no ship ID, but this should be OK;
+        ///     the other retrieval methods filter on a non-nullable Ship ID, so this
+        ///     should retain functionality.
+        /// </remarks>
+        public static Dictionary<Int32, IList<SectionInstanceInfo>> GetShipSectionInstances(Kerberos.Sots.Data.GameDatabase db)
+        {
+            //HACK: use reflection to access a private type.
+            DataObjectCache cache = ReflectionHelper.PrivateField<Kerberos.Sots.Data.GameDatabase, DataObjectCache>(db, "_dom");
+
+            Dictionary<Int32, IList<SectionInstanceInfo>> indexedShipSectionInstances = new Dictionary<Int32, IList<SectionInstanceInfo>>();
+
+            foreach (SectionInstanceInfo section in cache.section_instances.Values)
+            {
+                Int32? shipId = section.ShipID;
+                if (shipId != null)
+                {
+                    if (!indexedShipSectionInstances.ContainsKey(shipId.Value))
+                        indexedShipSectionInstances[shipId.Value] = new List<SectionInstanceInfo>();
+
+                    indexedShipSectionInstances[shipId.Value].Add(section);
+                }
+            }
+
+            return indexedShipSectionInstances;
+        }
+
+        /// <summary>Gathers all data and performs bulk insertion of Ships</summary>
+        /// <param name="shipsToInsert">Collection of ShipInsertionParameters containing data to insert on</param>
+        public void BulkInsertShips(IList<ShipInsertionParameters> shipsToInsert)
+        {
+            //Dictionary to track the number of ships inserted for each design; the key is DesignID, value is a tuple containing the base count as Item1 and the number to add as Item2
+            Dictionary<Int32, Tuple<Int32, Int32>> designBuiltCount = new Dictionary<Int32, Tuple<Int32, Int32>>();
+            List<ShipInfo> shipsBeingInserted = new List<ShipInfo>();
+            List<ShipSectionInsertionParameters> shipSectionsBeingInserted = new List<ShipSectionInsertionParameters>();
+
+            foreach (ShipInsertionParameters ship in shipsToInsert)
+            {
+                Int32 fleetID = ship.FleetID;
+                Int32 designID = ship.DesignID;
+                String shipName = ship.DesignName;
+
+                DesignInfo designInfo = this.GetDesignInfo(designID);
+                FleetInfo fleetInfo = this.GetFleetInfo(fleetID);
+                if (fleetInfo != null && designInfo.PlayerID != fleetInfo.PlayerID)
+                    throw new InvalidOperationException(String.Format("Mismatched design and fleet players (designID={0},design playerID={1},fleet playerID={2}).", designID, designInfo.PlayerID, fleetInfo.PlayerID));
+
+                Boolean isSuulka = false;
+                int psionicPower = 0;
+
+                DesignSectionInfo[] designSections = designInfo.DesignSections;
+                for (int i = 0; i < designSections.Length; i++)
+                {
+                    DesignSectionInfo designSectionInfo = designSections[i];
+                    ShipSectionAsset shipSectionAsset = this.AssetDatabase.GetShipSectionAsset(designSectionInfo.FilePath);
+                    psionicPower += (int)shipSectionAsset.PsionicPowerLevel;
+                    isSuulka = (isSuulka || shipSectionAsset.IsSuulka);
+                }
+                
+                if (isSuulka && shipName == null)
+                    shipName = designInfo.Name;
+
+                if (!isSuulka)
+                {
+                    int playerFactionID = this.GetPlayerFactionID(designInfo.PlayerID);
+                    Faction faction = this.AssetDatabase.GetFaction(playerFactionID);
+                    if (faction != null)
+                        psionicPower = (int)(designInfo.CrewAvailable * faction.PsionicPowerPerCrew);
+                }
+
+                //change the shift in designs built to work on a bulk level
+                if (!designBuiltCount.ContainsKey(designID))
+                    designBuiltCount[designID] = new Tuple<Int32, Int32>(this.GetNumShipsBuiltFromDesign(designID), 1);
+                else
+                    designBuiltCount[designID] = new Tuple<Int32, Int32>(designBuiltCount[designID].Item1, designBuiltCount[designID].Item2 + 1);
+
+                //GameDatabase.AddNumShipsBuiltFromDesign(db, designID, 1);
+                //int numShipsBuiltFromDesign = db.GetNumShipsBuiltFromDesign(designID);
+                int numShipsBuiltFromDesign = designBuiltCount[designID].Item1 + designBuiltCount[designID].Item2;
+
+                if (!isSuulka && (shipName == null || shipName == designInfo.Name))
+                    shipName = this.GetDefaultShipName(designID, numShipsBuiltFromDesign);
+                shipName = this.ResolveNewShipName(designInfo.PlayerID, shipName);
+
+                int turnCount = this.GetTurnCount();
+                int parentID = 0;
+
+                ShipInfo shipToAdd = new ShipInfo
+                {
+                    FleetID = fleetID,
+                    DesignID = designID,
+                    DesignInfo = designInfo,
+                    ParentID = parentID,
+                    ShipName = shipName,
+                    SerialNumber = numShipsBuiltFromDesign,
+                    Params = ship.ShipFlags,
+                    RiderIndex = -1,
+                    PsionicPower = psionicPower,
+                    AIFleetID = ship.AIFleetID,
+                    ComissionDate = turnCount,
+                    LoaCubes = ship.LoaCubes
+                };
+                ship.ShipInfo = shipToAdd;  //populate for backreferencing the ship ID
+
+                shipsBeingInserted.Add(shipToAdd);
+                shipSectionsBeingInserted.Add(new ShipSectionInsertionParameters(designInfo, shipToAdd, null));
+                
+                //int num2 = this._dom.ships.Insert(null, shipToAdd);
+                //this.TryAddFleetShip(num2, fleetID);
+                //this.InsertNewShipSectionInstances(designInfo, new int?(num2), null);
+                //this.AddCachedShipNameReference(designInfo.PlayerID, shipName);
+            }
+
+            //process the bulk insert
+            this.BulkInsertShipInfos(shipsBeingInserted);
+            this.BulkInsertShipSections(shipSectionsBeingInserted);
+
+            //post-process the insertions
+            foreach (ShipInfo insertedShip in shipsBeingInserted)
+            {
+                this.TryAddFleetShip(insertedShip.ID, insertedShip.FleetID);
+                this.AddCachedShipNameReference(insertedShip.DesignInfo.PlayerID, insertedShip.ShipName);
+            }
+        }
+
+        /// <summary>Gathers all data and performs bulk insertion of Ship Sections</summary>
+        /// <param name="ShipSectionInsertion">Collection of ShipSectionInsertionParameters containing data to insert on</param>
+        protected void BulkInsertShipSections(IList<ShipSectionInsertionParameters> ShipSectionInsertion)
+        {
+            List<SectionInstanceInfo> sectionInfosToInsert = new List<SectionInstanceInfo>();
+            List<ArmorInstanceInsertionParameters> armorInstancesToInsert = new List<ArmorInstanceInsertionParameters>();
+            List<SectionWeaponInstanceInsertionParameters> weaponsToInsert = new List<SectionWeaponInstanceInsertionParameters>();
+            List<ShipModuleInstanceInsertionParameters> modulesToInsert = new List<ShipModuleInstanceInsertionParameters>();
+            List<WeaponInstanceInfo> weaponInstancesToInsert = new List<WeaponInstanceInfo>();
+
+            foreach (ShipSectionInsertionParameters section in ShipSectionInsertion)
+            {
+                DesignSectionInfo[] designSections = section.DesignInfo.DesignSections;
+                for (int i = 0; i < designSections.Length; i++)
+                {
+                    DesignSectionInfo designSectionInfo = designSections[i];
+                    ShipSectionAsset shipSectionAsset = this.assetdb.GetShipSectionAsset(designSectionInfo.FilePath);
+                    List<string> list = new List<string>();
+                    if (designSectionInfo.Techs.Count > 0)
+                    {
+                        foreach (int current in designSectionInfo.Techs)
+                        {
+                            list.Add(this.GetTechFileID(current));
+                        }
+                    }
+                    int supplyWithTech = Ship.GetSupplyWithTech(this.assetdb, list, shipSectionAsset.Supply);
+                    int structureWithTech = Ship.GetStructureWithTech(this.assetdb, list, shipSectionAsset.Structure);
+
+                    SectionInstanceInfo sectionInfo = new SectionInstanceInfo
+                    {
+                        SectionID = designSectionInfo.ID,
+                        ShipID = section.ShipInfo.ID,
+                        StationID = section.StationID,
+                        Structure = structureWithTech,
+                        Supply = supplyWithTech,
+                        Crew = shipSectionAsset.Crew,
+                        Signature = shipSectionAsset.Signature,
+                        RepairPoints = shipSectionAsset.RepairPoints
+                    };
+
+                    sectionInfosToInsert.Add(sectionInfo);
+                    armorInstancesToInsert.Add(new ArmorInstanceInsertionParameters(shipSectionAsset, this.GetDesignAttributesForDesign(section.DesignInfo.ID), sectionInfo));
+                    weaponsToInsert.Add(new SectionWeaponInstanceInsertionParameters(shipSectionAsset.Mounts, designSectionInfo.WeaponBanks, sectionInfo));
+
+                    //int num = this.InsertSectionInstance(designSectionInfo.ID, shipId, stationId, structureWithTech, (float)supplyWithTech, shipSectionAsset.Crew, shipSectionAsset.Signature, shipSectionAsset.RepairPoints);
+                    //this.InsertNewArmorInstances(shipSectionAsset, this.GetDesignAttributesForDesign(designInfo.ID).ToList<SectionEnumerations.DesignAttribute>(), num);
+                    //this.InsertNewShipWeaponInstancesForSection(shipSectionAsset.Mounts.ToList<LogicalMount>(), designSectionInfo.WeaponBanks.ToList<WeaponBankInfo>(), num);
+                    if (designSectionInfo.Modules != null)
+                    {
+                        modulesToInsert.Add(new ShipModuleInstanceInsertionParameters(shipSectionAsset, designSectionInfo.Modules, sectionInfo));
+                        //this.InsertNewShipModuleInstances(shipSectionAsset, designSectionInfo.Modules, num);
+                    }
+                }
+            }
+
+            //perform bulk inserts; in code it goes section;armor;weapon;modules, but I think I will swap modules and weapons since Modules can have Weapons
+            this.BulkInsertSectionInstanceInfos(sectionInfosToInsert);
+            this.BulkInsertSectionArmor(armorInstancesToInsert);
+            this.BulkInsertSectionModuleInstances(modulesToInsert, weaponInstancesToInsert);
+            this.BulkInsertSectionWeaponInstances(weaponsToInsert, weaponInstancesToInsert);
+            this.BulkInsertWeaponInstances(weaponInstancesToInsert);   //insert all of the weapon instances
+        }
+
+        /// <summary>Gathers all data and performs bulk insertion of ship section armor</summary>
+        /// <param name="armorInstancesToInsert">Collection or armor parameters to insert</param>
+        protected void BulkInsertSectionArmor(IList<ArmorInstanceInsertionParameters> armorInstancesToInsert)
+        {
+            List<ArmorInstanceInsertion> armorToInsert = new List<ArmorInstanceInsertion>();
+
+            foreach (ArmorInstanceInsertionParameters armorInstance in armorInstancesToInsert)
+            {
+                Dictionary<ArmorSide, DamagePattern> dictionary = new Dictionary<ArmorSide, DamagePattern>();
+                int armorSide = 0;
+                Kerberos.Sots.Framework.Size[] armor = armorInstance.ShipSectionAsset.Armor;
+                for (int i = 0; i < armor.Length; i++)
+                {
+                    DamagePattern damagePattern = armorInstance.ShipSectionAsset.CreateFreshArmor((ArmorSide)armorSide, Ship.CalcArmorWidthModifier(armorInstance.Attributes.ToList(), 0));
+                    if (damagePattern.Height != 0 && damagePattern.Width != 0)
+                    {
+                        dictionary[(ArmorSide)armorSide] = damagePattern;
+                        armorSide++;
+                    }
+                }
+
+                armorToInsert.Add(new ArmorInstanceInsertion(dictionary, armorInstance.ShipSection));
+                //this._dom.armor_instances.Insert(new int?(armorInstance.ShipSection.SectionID), dictionary);
+            }
+
+            this.BulkInsertSectionArmorInstances(armorToInsert);
+        }
+
+        /// <summary>Gathers all data and performs bulk insertion of ship section modules</summary>
+        /// <param name="modulesToInsert">Collection of modules to insert</param>
+        /// <param name="weaponInfosToInsert">Collection of related weapon instances to insert at a later point; this collection is simply added to</param>
+        protected void BulkInsertSectionModuleInstances(IList<ShipModuleInstanceInsertionParameters> modulesToInsert, IList<WeaponInstanceInfo> weaponInfosToInsert)
+        {
+            Dictionary<Int32, String> moduleAssets = new Dictionary<Int32, String>();
+            List<ModuleInstanceInfo> moduleInstancesToInsert = new List<ModuleInstanceInfo>();
+            List<ModuleWeaponInstanceInsertionParameters> moduleWeaponsToInsert = new List<ModuleWeaponInstanceInsertionParameters>();
+
+            foreach (ShipModuleInstanceInsertionParameters moduleParameters in modulesToInsert)
+            {
+                foreach (DesignModuleInfo module in moduleParameters.Modules)
+                {
+                    if (!moduleAssets.ContainsKey(module.ModuleID))
+                        moduleAssets[module.ModuleID] = this.GetModuleAsset(module.ModuleID);
+
+                    string mPath = moduleAssets[module.ModuleID];
+                    LogicalModule logicalModule = this.assetdb.Modules.FirstOrDefault((LogicalModule x) => x.ModulePath == mPath);
+
+                    LogicalModuleMount mount = moduleParameters.SectionAsset.Modules.First((LogicalModuleMount x) => x.NodeName == module.MountNodeName);
+                    ModuleInstanceInfo moduleInfo = new ModuleInstanceInfo
+                    {
+                        SectionInstanceID = moduleParameters.ShipSection.ID,
+                        RepairPoints = logicalModule.RepairPointsBonus,
+                        Structure = (int)logicalModule.Structure,
+                        ModuleNodeID = mount.NodeName
+                    };
+                    moduleInstancesToInsert.Add(moduleInfo);
+
+                    //int moduleInstId = this.InsertModuleInstance(moduleParameters.SectionAsset.Modules.First((LogicalModuleMount x) => x.NodeName == module.MountNodeName), logicalModule, moduleParameters.ShipSection.SectionID);
+                    if (logicalModule.Mounts.Count<LogicalMount>() > 0)
+                    {
+                        moduleWeaponsToInsert.Add(new ModuleWeaponInstanceInsertionParameters(logicalModule.Mounts, module.WeaponID, moduleParameters.ShipSection, moduleInfo));
+                        //this.InsertNewShipWeaponInstancesForModule(logicalModule.Mounts.ToList<LogicalMount>(), module.WeaponID, moduleParameters.ShipSection.SectionID, moduleInstId);
+                    }
+                }
+            }
+
+            //perform the bulk insertion
+            this.BulkInsertSectionModuleInstances(moduleInstancesToInsert);
+            this.BulkInsertModuleWeaponInstances(moduleWeaponsToInsert, weaponInfosToInsert);
+        }
+
+        /// <summary>Gathers all data for the bulk insertion of ship section weapons and outputs the insertion records to provided collection</summary>
+        /// <param name="weaponsToInsert">Ship section weapon parameters to create weapons for</param>
+        /// <param name="weaponInfosToInsert">Collection to add WeaponInstanceInfo objects generated into</param>
+        protected void BulkInsertSectionWeaponInstances(List<SectionWeaponInstanceInsertionParameters> weaponsToInsert, IList<WeaponInstanceInfo> weaponInfosToInsert)
+        {
+            foreach (SectionWeaponInstanceInsertionParameters weaponParams in weaponsToInsert)
+            {
+                int weaponIndex = 0;
+                foreach (LogicalMount mount in weaponParams.Mounts)
+                {
+                    if (!WeaponEnums.IsBattleRider(mount.Bank.TurretClass))
+                    {
+                        float turretHealth = Ship.GetTurretHealth(mount.Bank.TurretSize);
+                        WeaponBankInfo weaponBankInfo = weaponParams.Banks.FirstOrDefault((WeaponBankInfo x) => x.BankGUID == mount.Bank.GUID);
+                        if (weaponBankInfo != null && weaponBankInfo.WeaponID.HasValue)
+                        {
+                            string weapon = this.GetWeaponAsset(weaponBankInfo.WeaponID.Value);
+                            LogicalWeapon logicalWeapon = this.assetdb.Weapons.FirstOrDefault((LogicalWeapon x) => x.FileName == weapon);
+                            if (logicalWeapon != null)
+                            {
+                                turretHealth += logicalWeapon.Health;
+                            }
+                        }
+
+                        WeaponInstanceInfo newWeapon = new WeaponInstanceInfo
+                        {
+                            SectionInstanceID = weaponParams.ShipSection.ID,
+                            ModuleInstanceID = null,
+                            Structure = turretHealth,
+                            MaxStructure = turretHealth,
+                            WeaponID = weaponIndex,
+                            NodeName = mount.NodeName
+                        };
+                        weaponInfosToInsert.Add(newWeapon);
+                        
+                        //this.InsertWeaponInstance(mount, sectionInstId, null, weaponIndex, turretHealth, mount.NodeName);
+                        weaponIndex++;
+                    }
+                }
+            }
+        }
+
+        /// <summary>Gathers all data for the bulk insertion of ship section modules' weapons and outputs the insertion records to provided collection</summary>
+        /// <param name="weaponsToInsert">Module weapon parameters to create weapons for</param>
+        /// <param name="weaponInfosToInsert">Collection to add WeaponInstanceInfo objects generated into</param>
+        protected void BulkInsertModuleWeaponInstances(List<ModuleWeaponInstanceInsertionParameters> weaponsToInsert, IList<WeaponInstanceInfo> weaponInfosToInsert)
+        {
+            foreach (ModuleWeaponInstanceInsertionParameters weaponParams in weaponsToInsert)
+            {
+                string weapon = weaponParams.WeaponID.HasValue ? this.GetWeaponAsset(weaponParams.WeaponID.Value) : String.Empty;
+                LogicalWeapon logicalWeapon = (!string.IsNullOrEmpty(weapon)) ? this.assetdb.Weapons.FirstOrDefault((LogicalWeapon x) => x.FileName == weapon) : null;
+                int weaponId = 0;
+                foreach (LogicalMount currentMount in weaponParams.Mounts)
+                {
+                    if (!WeaponEnums.IsBattleRider(currentMount.Bank.TurretClass))
+                    {
+                        float turretHealth = Ship.GetTurretHealth(currentMount.Bank.TurretSize);
+                        if (logicalWeapon != null)
+                            turretHealth += logicalWeapon.Health;
+                        
+                        WeaponInstanceInfo newWeapon = new WeaponInstanceInfo
+                        {
+                            SectionInstanceID = weaponParams.ShipSection.ID,
+                            ModuleInstanceID = weaponParams.ModuleInstance.ID,
+                            Structure = turretHealth,
+                            MaxStructure = turretHealth,
+                            WeaponID = weaponId,
+                            NodeName = currentMount.NodeName
+                        };
+                        weaponInfosToInsert.Add(newWeapon);
+
+                        //this.InsertWeaponInstance(currentMount, sectionInstId, new int?(moduleInstId), weaponId, turretHealth, currentMount.NodeName);
+                        weaponId++;
+                    }
+                }
+            }
+        }
+
+        /// <summary>Performs the actual bulk insert of ShipInfo records</summary>
+        /// <param name="shipsBeingInserted">Collection of ShipInfoInsertion records containing ShipInfos to insert</param>
+        protected void BulkInsertShipInfos(IList<ShipInfo> shipsBeingInserted)
+        {
+            ShipsCache cache = new ShipsCache(this._dom.ships);
+            cache.BulkInsert(shipsBeingInserted);
+        }
+
+        /// <summary>Performs the actual bulk insert of SectionInstanceInfo records</summary>
+        /// <param name="shipSectionsBeingInserted">Collection of SectionInstanceInfo records containing SectionInstanceInfo to insert</param>
+        protected void BulkInsertSectionInstanceInfos(IList<SectionInstanceInfo> shipSectionsBeingInserted)
+        {
+            SectionInstancesCache cache = new SectionInstancesCache(this._dom.section_instances);
+            cache.BulkInsert(shipSectionsBeingInserted);
+        }
+
+        /// <summary>Performs the actual bulk insert of armor records</summary>
+        /// <param name="armorBeingInserted">Collection of ArmorInstanceInsertion records containing armor to insert</param>
+        protected void BulkInsertSectionArmorInstances(IList<ArmorInstanceInsertion> armorBeingInserted)
+        {
+            ArmorInstancesCache cache = new ArmorInstancesCache(this._dom.armor_instances);
+            cache.BulkInsert(armorBeingInserted);
+        }
+
+        /// <summary>Performs the actual bulk insert of module records</summary>
+        /// <param name="modulesBeingInserted">Collection of ModuleInstanceInfo records containing modules to insert</param>
+        protected void BulkInsertSectionModuleInstances(List<ModuleInstanceInfo> modulesBeingInserted)
+        {
+            ModuleInstancesCache cache = new ModuleInstancesCache(this._dom.module_instances);
+            cache.BulkInsert(modulesBeingInserted);
+        }
+
+        /// <summary>Performs the actual bulk insert of weapon records</summary>
+        /// <param name="weaponsBeingInserted">Collection of WeaponInstanceInfo records containing weapons to insert</param>
+        protected void BulkInsertWeaponInstances(List<WeaponInstanceInfo> weaponsBeingInserted)
+        {
+            WeaponInstancesCache cache = new WeaponInstancesCache(this._dom.weapon_instances);
+            cache.BulkInsert(weaponsBeingInserted);
         }
 
 

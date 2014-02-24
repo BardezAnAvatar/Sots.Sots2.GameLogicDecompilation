@@ -15,6 +15,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
+using PerformanceStarFleet = Bardez.Projects.SwordOfTheStars.SotS2.Fixes.Sots.StarFleet;
+
 namespace Kerberos.Sots.Strategy
 {
 	internal class StrategicAI
@@ -2292,7 +2295,9 @@ namespace Kerberos.Sots.Strategy
                     {
                         this.TransferCubesFromReserve(info10);
                         this.m_FleetCubePoints.Add(info10.ID, Kerberos.Sots.StarFleet.StarFleet.GetFleetLoaCubeValue(this._game, info10.ID));
-                        Kerberos.Sots.StarFleet.StarFleet.BuildFleetFromCompositionID(this._game, info10.ID, info10.FleetConfigID, MissionType.NO_MISSION);
+
+                        PerformanceStarFleet.StarFleet.BuildFleetFromCompositionID(this._game, info10.ID, info10.FleetConfigID, MissionType.NO_MISSION);
+                        //Kerberos.Sots.StarFleet.StarFleet.BuildFleetFromCompositionID(this._game, info10.ID, info10.FleetConfigID, MissionType.NO_MISSION);
                         this.ConsumeRemainingLoaCubes(info10, stance);
                         if (!info10.FleetConfigID.HasValue)
                         {
