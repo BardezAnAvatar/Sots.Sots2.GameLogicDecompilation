@@ -154,25 +154,94 @@
   </Binaries>
   <Reports>
     <Report>
-      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\mars140211.vsp</Path>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\reaction until combat.vsp</Path>
     </Report>
     <Report>
-      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\mars140211(1).vsp</Path>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\adjust budget.vsp</Path>
     </Report>
     <Report>
-      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\mars140211(2).vsp</Path>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\adjust budget 2.vsp</Path>
     </Report>
     <Report>
-      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\mars140213.vsp</Path>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\enter research screen.vsp</Path>
     </Report>
     <Report>
-      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\mars140213(1).vsp</Path>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\switch unresearched item.vsp</Path>
     </Report>
     <Report>
-      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\mars140210(1).vsp</Path>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\return to starmap.vsp</Path>
     </Report>
     <Report>
-      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\mars140210.vsp</Path>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\switch to large system in surveryed system view.vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\switch to large system in star map.vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\enter and exit design screen.vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\Open repair screen.vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\repair all.vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\close repair dialog.vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\bring up fleet missions.vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\Dissolve fleet 1.vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\Dissolve fleet 2.vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\Select Admiral in create fleet.vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\Sort admirals by age.vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\Clicked upgrade station.vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\confirmed constuction fleet mission.vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\Turn 401 end.vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\Turn 401 reaction screen to combat screen.vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\Adding ships to build order.vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\turn 405 end.vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\post-combat hang.vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\enter budget screen.vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\end of turn to reaction [A].vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\reaction until combat [A].vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\mars140224.vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\mars140224(1).vsp</Path>
+    </Report>
+    <Report>
+      <Path>N:\Code\SotS\SotS II\SotS2 Decompilation\mars140224(2).vsp</Path>
     </Report>
   </Reports>
   <Launches>

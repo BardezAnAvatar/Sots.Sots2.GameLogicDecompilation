@@ -8,13 +8,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{5ECD18F9-8268-49F3-9331-4920F37ED6D2}"
 	ProjectSection(SolutionItems) = preProject
 		mars.psess = mars.psess
-		mars140210(1).vsp = mars140210(1).vsp
-		mars140210.vsp = mars140210.vsp
-		mars140211(1).vsp = mars140211(1).vsp
-		mars140211(2).vsp = mars140211(2).vsp
-		mars140211.vsp = mars140211.vsp
-		mars140213(1).vsp = mars140213(1).vsp
-		mars140213.vsp = mars140213.vsp
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sots2_managed", "sots2_managed", "{3CB80FD1-0122-4081-8680-CB2B31B8CE9E}"
@@ -36,19 +29,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sots2_managed", "sots2_managed\2.0.25092.5\Reflector\sots2_managed.csproj", "{0FABAF0C-0C1D-46C5-A9C7-7E240F22E950}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://bardezserver:8080/tfs/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = sots2.exe\\sots2.exe.csproj
-		SccProjectName1 = sots2.exe
-		SccLocalPath1 = sots2.exe
-		SccProjectUniqueName2 = sots2_managed\\2.0.25092.5\\ILSpy\\sots2_managed.csproj
-		SccProjectTopLevelParentUniqueName2 = SotS2\u0020Decompilation.sln
-		SccProjectName2 = sots2_managed/2.0.25092.5/ILSpy
-		SccLocalPath2 = sots2_managed\\2.0.25092.5\\ILSpy
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
